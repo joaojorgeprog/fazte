@@ -10,6 +10,7 @@ import LoadingSpinner from './Components/LoadingSpinner'
 import { useRouter } from 'next/navigation';
 import { SessionProvider } from "next-auth/react";
 import FcmTokenComp from '../../utils/hooks/firebaseForeground';
+import Footer from './Components/Footer/index'
 
 const ModalContext = createContext();
 
@@ -76,6 +77,7 @@ function AuthWrapper({ children }) {
     <>
       <FcmTokenComp />
       {children}
+      <Footer />
     </>
   );
 }
