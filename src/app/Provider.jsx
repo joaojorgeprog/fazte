@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { SessionProvider } from "next-auth/react";
 import FcmTokenComp from '../../utils/hooks/firebaseForeground';
 import Footer from './Components/Footer/index'
+import Script from 'next/script'
 
 const ModalContext = createContext();
 
@@ -57,8 +58,41 @@ export default function Provider({children}) {
     }
   }, []);
 
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      window.gtag('config', 'G-XXXXXXX', { page_path: url });
+    };
+
+    // Assinando o evento para mudança de rota
+    window.addEventListener('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      // Remover evento ao desmontar
+      window.removeEventListener('routeChangeComplete', handleRouteChange);
+    };
+  }, []);
+
   return (
     <ReduxProvider store={store}>
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=G-82DPEZDPSP`} // Substitua pelo seu ID do Google Analytics
+      />
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-82DPEZDPSP', {
+              page_path: window.location.pathname,
+            });
+          `,
+        }}
+      />
+
       <NextUIProvider>
         <NextThemesProvider attribute="class">
           <ModalContext.Provider value={{ openModal, closeModal, isModalOpen, modalStack }}>
