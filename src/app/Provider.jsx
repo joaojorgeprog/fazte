@@ -60,7 +60,7 @@ export default function Provider({children}) {
 
   useEffect(() => {
     const handleRouteChange = (url) => {
-      window.gtag('config', 'G-XXXXXXX', { page_path: url });
+      window.gtag('config', 'G-82DPEZDPSP', { page_path: url });
     };
 
     // Assinando o evento para mudança de rota

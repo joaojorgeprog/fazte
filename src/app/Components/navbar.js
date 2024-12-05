@@ -88,6 +88,16 @@ export default function App({auth}) {
     return router.pathname === route
   };
 
+  const clickLogin = () => {
+    window.gtag('event', 'click', {
+      event_category: 'Button',    // Categoria do evento
+      event_label: 'Click Button Login', // Rótulo do evento
+      value: 1                     // Valor opcional
+    });
+
+    openModal('loginModal')
+  }
+
   return (
     <Navbar
       isBordered
@@ -121,19 +131,11 @@ export default function App({auth}) {
 
       <NavbarContent justify="end">
         {!auth &&
-            <NavbarItem className="hidden lg:flex">
-                <Button onPress={() => openModal('loginModal')} color="primary">Login</Button>
+            <NavbarItem className="lg:flex">
+            <Button onPress={() => clickLogin()} color="primary">Login</Button>
             </NavbarItem>
         }
         <LoginModal modalName={"loginModal"} />
-        {!auth &&
-            <NavbarItem>
-                <Button onPress={() => openModal('registerModal')} color="warning" href="#" variant="flat">
-                    Sign Up
-                </Button>
-            </NavbarItem>
-        }
-        <RegisterModal modalName={"registerModal"} />
 
         {auth && 
           <Dropdown placement="bottom-start">

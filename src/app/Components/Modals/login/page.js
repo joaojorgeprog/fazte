@@ -168,6 +168,7 @@ const Login = ({ modalName, onLoginSuccess }) => {
   return (
     <>
     <Modal 
+        hideCloseButton={true}
         isOpen={isModalOpen(modalName)} 
         onOpenChange={() => closeModal(modalName)}
         placement="center"
@@ -235,6 +236,17 @@ const Login = ({ modalName, onLoginSuccess }) => {
                     </div>
                 )}
                 </ModalBody>
+                    <div className="px-2 flex flex-col items-center justify-center">
+                      <p className="text-center">or</p>
+                      <Divider />
+                      <button
+                        onClick={() => signIn("google")}
+                        className="flex items-center px-5 py-2 border border-gray-300 rounded cursor-pointer text-base mt-2"
+                      >
+                        <FcGoogle className="mr-2 text-xl" />
+                        Entrar com Google
+                      </button>
+                    </div>
                 
                 <ModalFooter>
                   <Button color="danger" variant="flat" onPress={() => closeModal(modalName)}>
@@ -251,24 +263,6 @@ const Login = ({ modalName, onLoginSuccess }) => {
                 </ModalFooter>
                 
                 </form>
-                  <p style={{ textAlign: 'center' }}>or</p>
-                  <Divider />
-                  <button
-                    onClick={() => signIn("google")}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "10px 20px",
-                      border: "1px solid #ccc",
-
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                      fontSize: "16px",
-                    }}
-                  >
-                    <FcGoogle style={{ marginRight: "10px", fontSize: "24px" }} />
-                    Entrar com Google
-                  </button>
                 </Tab>
                 <Tab key="sign-up" title="Sign up">
                   <form onSubmit={formik.handleSubmit}>
@@ -380,7 +374,7 @@ const Login = ({ modalName, onLoginSuccess }) => {
                       )}
                     </ModalBody>
                     <ModalFooter>
-                      <Button color="danger" variant="flat" onPress={() => closeModal('registerModal')}>
+                      <Button color="danger" variant="flat" onPress={() => closeModal(modalName)}>
                         Close
                       </Button>
                       {!loadingRegister &&
